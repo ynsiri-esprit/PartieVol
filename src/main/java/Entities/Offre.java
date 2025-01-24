@@ -1,6 +1,6 @@
 package Entities;
 
-public class Offre {
+public abstract class Offre {
     private int id;
     private String description;
     private float tarif;

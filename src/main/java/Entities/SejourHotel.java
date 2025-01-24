@@ -1,5 +1,5 @@
 package Entities;
-
+//subclass
 public class SejourHotel extends Offre {
     private String nomHotel;
     private int nbrChambresDispo;
