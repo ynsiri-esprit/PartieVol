@@ -1,6 +1,7 @@
 module org.example.travelagency {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens org.example.travelagency to javafx.fxml;
