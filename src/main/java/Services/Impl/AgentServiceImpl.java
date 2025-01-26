@@ -102,4 +102,18 @@ public class AgentServiceImpl implements IAgentService {
         }
         return agents;
     }
+
+    @Override
+    public void sendEmailToAgent(Agent agent) {
+        EmailService emailService = new EmailService();
+
+        String subject = "Vos informations de connexion";
+        String messageBody = "Bonjour " + agent.getNom() + " " + agent.getPrenom() + ",\n\n" +
+                "Voici vos informations de connexion :\n" +
+                "Login : " + agent.getLogin() + "\n" +
+                "Mot de passe : " + agent.getMotDePasse() + "\n\n" +
+                "Cordialement,\nL'équipe support";
+
+        emailService.sendEmail(agent.getEmail(), subject, messageBody);
+    }
 }
