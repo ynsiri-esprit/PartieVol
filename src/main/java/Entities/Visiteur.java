@@ -3,7 +3,7 @@ package Entities;
 import java.util.Date;
 import java.util.Objects;
 
-public class Visiteur {
+public abstract class Visiteur {
     private String cin;
     private String nom;
     private String prenom;
