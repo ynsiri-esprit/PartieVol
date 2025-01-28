@@ -3,11 +3,10 @@ package Services.Impl;
 import Entities.Agent;
 import Services.IAgentService;
 import Utils.DataSource;
-
-import javax.mail.MessagingException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 public class AgentServiceImpl implements IAgentService {
     private Connection con = DataSource.getInstance().getConn();
@@ -132,4 +131,85 @@ public class AgentServiceImpl implements IAgentService {
             return count > 0;    }
         return false;
 }
+
+    @Override
+    public int StatsBookingToDay() throws SQLException {
+        LocalDate today = LocalDate.now();
+        String req = "SELECT count(*) AS NB FROM `reservation` where `date`=?";
+        PreparedStatement pre = con.prepareStatement(req);
+        pre.setDate(1,Date.valueOf(today));
+        ResultSet rs = pre.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("NB");
+               }
+    return 0;}
+
+    @Override
+    public int StatsBookingGeneral() throws SQLException {
+        LocalDate today = LocalDate.now();
+        String req = "SELECT count(*) AS NB FROM `reservation`";
+        PreparedStatement pre = con.prepareStatement(req);
+        ResultSet rs = pre.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("NB");
+        }
+        return 0;    }
+
+
+    @Override
+    public int StatsFlightToDay() throws SQLException {
+        LocalDate today = LocalDate.now();
+        String req = "SELECT count(*) AS NB FROM `voyageorganise` where `dateDepart`=?";
+        PreparedStatement pre = con.prepareStatement(req);
+        pre.setDate(1,Date.valueOf(today));
+        ResultSet rs = pre.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("NB");
+        }
+        return 0;    }
+
+    @Override
+    public int StatsFlightGneral() throws SQLException {
+        String req = "SELECT count(*) AS NB FROM `voyageorganise`";
+        int nbFlights = 0;
+        try (PreparedStatement pre = con.prepareStatement(req);
+             ResultSet rs = pre.executeQuery()) {
+
+            if (rs.next()) {
+                nbFlights = rs.getInt("NB");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Erreur lors de la récupération du nombre de vols", e);
+        }
+
+        return nbFlights;
+    }
+    public int StatsSumGneral() throws SQLException {
+        String req = "SELECT SUM(Tarif) AS NB FROM `voyageorganise`";
+        int SumGeneral = 0;
+PreparedStatement pre = con.prepareStatement(req);
+             ResultSet rs = pre.executeQuery();
+
+            if (rs.next()) {
+                SumGeneral = rs.getInt("NB");
+            }
+
+
+        return SumGeneral;
+    }
+
+    public int StatsSumToDay() throws SQLException {
+        LocalDate today = LocalDate.now();
+        String req = "SELECT SUM(Tarif) AS NB FROM `voyageorganise` where `dateDepart`=?";
+        PreparedStatement pre = con.prepareStatement(req);
+        pre.setDate(1,Date.valueOf(today));
+        int SumGeneral = 0;
+             ResultSet rs = pre.executeQuery();
+            if (rs.next()) {
+                SumGeneral = rs.getInt("NB");
+            }
+        return SumGeneral;
+    }
 }
+

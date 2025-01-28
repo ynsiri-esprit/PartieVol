@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="744.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelagency.WelcomePageController">
+   <children>
+      <MenuButton accessibleRole="HYPERLINK" layoutX="640.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-image-width: 0px 0px 2px 0px;" text="Gerer les vols">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Ajouter un vol" />
+          <MenuItem mnemonicParsing="false" text="Liste des vols" />
+        </items>
+      </MenuButton>
+      <MenuButton layoutX="525.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-image-width: 0px 0px 2px 0px;" text="Gerer les sejour">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Ajouter un sejour" />
+            <MenuItem mnemonicParsing="false" text="Lister les sejours" />
+         </items>
+      </MenuButton>
+      <MenuButton layoutX="399.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-image-width: 0px 0px 2px 0px;" text="Gerer les voyages">
+         <items>
+             <MenuItem mnemonicParsing="false" text="Ajouter un voyage" />
+             <MenuItem mnemonicParsing="false" text="Lister les voyages" />
+         </items>
+      </MenuButton>
+      <AnchorPane prefHeight="401.0" prefWidth="200.0" style="-fx-background-color: #023047;" />
+      <Label layoutX="217.0" layoutY="45.0" text="Salut">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="276.0" layoutY="45.0" text="Label" fx:id="Name">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <SplitPane dividerPositions="0.46011816838995556" layoutX="200.0" layoutY="119.0" prefHeight="281.0" prefWidth="543.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Label layoutX="20.0" layoutY="14.0" text="Chiffres d'aujourd'hui" underline="true" />
+                  <Label layoutX="14.0" layoutY="48.0" text="Nombre de voyages" />
+                  <Label layoutX="14.0" layoutY="90.0" text="Nombre de vols" />
+                  <Label layoutX="20.0" layoutY="140.0" text="Somme" />
+                  <Label layoutX="102.0" fx:id="totalSumLabel" layoutY="195.0" text="Label" />
+                  <Label layoutX="169.0" fx:id="travelCountLabel" layoutY="48.0" text="Label" />
+                  <Label layoutX="169.0" fx:id="flightCountLabel" layoutY="90.0" text="Label" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #023047;">
+               <children>
+                  <Label layoutX="17.0" layoutY="12.0" text="Chiffre en general" textFill="WHITE" underline="true" />
+                  <Label layoutX="24.0" layoutY="46.0" text="Nombre de voyages" textFill="WHITE" />
+                  <Label layoutX="24.0" layoutY="84.0" text="Nombre de vols" textFill="WHITE" />
+                  <Label layoutX="32.0" layoutY="140.0" text="Somme" textFill="WHITE" />
+                  <Label layoutX="124.0" fx:id="generalTotalSumLabel" layoutY="190.0" text="Somme" textFill="WHITE" />
+                  <Label layoutX="216.0" fx:id="generalFlightCountLabel" layoutY="46.0" text="Label" textFill="WHITE" />
+                  <Label layoutX="216.0" fx:id="generalTravelCountLabel" layoutY="84.0" text="Label" textFill="WHITE" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
