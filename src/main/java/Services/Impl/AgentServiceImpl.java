@@ -4,6 +4,7 @@ import Entities.Agent;
 import Services.IAgentService;
 import Utils.DataSource;
 
+import javax.mail.MessagingException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,4 +117,19 @@ public class AgentServiceImpl implements IAgentService {
 
         emailService.sendEmail(agent.getEmail(), subject, messageBody);
     }
+
+    @Override
+    public boolean Login(String login,String password) throws SQLException {
+        int count=0;
+        String req = "SELECT count(*) AS NB FROM `agent` WHERE `login` = ? AND `motDePasse` = ?";
+        PreparedStatement pre = con.prepareStatement(req);
+        pre.setString(1, login);
+        pre.setString(2, password);
+
+        ResultSet rs = pre.executeQuery();
+        if (rs.next()) {
+            count = rs.getInt("NB");
+            return count > 0;    }
+        return false;
+}
 }
