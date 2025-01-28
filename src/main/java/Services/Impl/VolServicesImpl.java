@@ -1,19 +1,15 @@
 package Services.Impl;
-
 import Entities.TypeVol;
-import Entities.Visiteur;
 import Entities.Vol;
-import Services.IVisiteurService;
 import Services.IVolServices;
 import Utils.DataSource;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VolServicesImpl implements IVolServices {
 
-    private Connection con = DataSource.getInstance().getConn();
+    private final Connection con = DataSource.getInstance().getConn();
     private Statement st;
 
     public VolServicesImpl() {
@@ -81,7 +77,7 @@ public class VolServicesImpl implements IVolServices {
                     v.setId(rs.getInt("id"));
                     v.setDescription(rs.getString("description"));
                     v.setTarif(rs.getFloat("tarif"));
-                    v.setType(TypeVol.valueOf(rs.getString("type").toString().toLowerCase()));
+                    v.setType(TypeVol.valueOf(rs.getString("type").toLowerCase()));
                     v.setCompagnie(rs.getString("compagnieDepart"));
                     v.setAeroportDepart(rs.getString("aeroportDepart"));
                     v.setAeroportArrivee(rs.getString("aeroportArrivee"));
@@ -104,7 +100,7 @@ public class VolServicesImpl implements IVolServices {
             v.setId(rs.getInt("id"));
             v.setDescription(rs.getString("description"));
             v.setTarif(rs.getFloat("tarif"));
-            v.setType(TypeVol.valueOf(rs.getString("type").toString().toLowerCase()));
+            v.setType(TypeVol.valueOf(rs.getString("type").toLowerCase()));
             v.setCompagnie(rs.getString("compagnieDepart"));
             v.setAeroportDepart(rs.getString("aeroportDepart"));
             v.setAeroportArrivee(rs.getString("aeroportArrivee"));

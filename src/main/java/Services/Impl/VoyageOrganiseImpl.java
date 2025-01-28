@@ -1,7 +1,4 @@
 package Services.Impl;
-
-import Entities.TypeVol;
-import Entities.Vol;
 import Entities.VoyageOrganise;
 import Services.IVoyageOrganiseService;
 import Utils.DataSource;
@@ -13,7 +10,7 @@ import java.util.List;
 
 public class VoyageOrganiseImpl implements IVoyageOrganiseService {
 
-    private Connection con = DataSource.getInstance().getConn();
+    private final Connection con = DataSource.getInstance().getConn();
     private Statement st;
 
     public VoyageOrganiseImpl() {
@@ -26,23 +23,23 @@ public class VoyageOrganiseImpl implements IVoyageOrganiseService {
 
     @Override
     public void ajouter(VoyageOrganise voyageOrganise) throws SQLException {
-        String inteniraire= "";
-        String pointInteret="";
+        StringBuilder pointInteret = new StringBuilder();
+        StringBuilder itineraire = new StringBuilder();
         for(String iteniraire:voyageOrganise.getItineraires())
         {
-            inteniraire+=iteniraire+"/";
+            itineraire.append(iteniraire).append("/");
         }
         for(String point:voyageOrganise.getPointsIneret())
         {
-            pointInteret+=point+"/";
+            pointInteret.append(point).append("/");
         }
         String req = "INSERT INTO `voyageorganise` (`id`, `itineraires`, `dateDepart`, `pointsInteret`, `guideDisponible`,`description`,`Tarif`) " +
                 "VALUES (?, ?, ?, ?, ?,?,?)";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setInt(1, voyageOrganise.getId());
-        pre.setString(2,inteniraire);
+        pre.setString(2,itineraire.toString());
         pre.setDate(3,new java.sql.Date(voyageOrganise.getDateDepart().getTime()));
-        pre.setString(4,pointInteret);
+        pre.setString(4,pointInteret.toString());
         pre.setBoolean(5,voyageOrganise.isGuideDisponible());
         pre.setString(6,voyageOrganise.getDescription());
         pre.setFloat(7,voyageOrganise.getTarif());
@@ -62,22 +59,22 @@ public class VoyageOrganiseImpl implements IVoyageOrganiseService {
 
     @Override
     public void update(VoyageOrganise voyageOrganise) throws SQLException {
-        String inteniraire= "";
-        String pointInteret="";
+        StringBuilder pointInteret = new StringBuilder();
+        StringBuilder itineraire = new StringBuilder();
         for(String iteniraire:voyageOrganise.getItineraires())
         {
-            inteniraire+=iteniraire+"/";
+            itineraire.append(iteniraire).append("/");
         }
         for(String point:voyageOrganise.getPointsIneret())
         {
-            pointInteret+=point+"/";
+            pointInteret.append(point).append("/");
         }
         String req = "UPDATE `voyageorganise` SET `itineraires` = ?, `dateDepart` = ?, `pointsInteret` = ?, `guideDisponible` = ?,`description` = ?,`Tarif` = ?" +
                 "WHERE `id` = ?";
         PreparedStatement pre = con.prepareStatement(req);
-        pre.setString(1,inteniraire);
+        pre.setString(1,itineraire.toString());
         pre.setDate(2,new java.sql.Date(voyageOrganise.getDateDepart().getTime()));
-        pre.setString(3,pointInteret);
+        pre.setString(3,pointInteret.toString());
         pre.setBoolean(4,voyageOrganise.isGuideDisponible());
         pre.setString(5,voyageOrganise.getDescription());
         pre.setFloat(6,voyageOrganise.getTarif());
