@@ -58,7 +58,9 @@ public class VoyageOrganise extends Offre {
     @Override
     public String toString() {
         return "VoyageOrganise{" +
-                "itineraires=" + itineraires +
+                "Description=" + getDescription() +
+                ",Tarif=" + getTarif() +
+                ",itineraires=" + itineraires +
                 ", dateDepart=" + dateDepart +
                 ", pointsIneret=" + pointsIneret +
                 ", guideDisponible=" + guideDisponible +

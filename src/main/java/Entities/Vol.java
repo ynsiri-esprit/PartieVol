@@ -7,33 +7,27 @@ public class Vol extends Offre{
     public Vol(){
     }
 
-    public Vol(int id, String description, float tarif, int numeroVol, TypeVol type, String compagnie, String aeroportDepart, String aeroportArrivee, Date heureDepart, Date heureArrivee) {
-        super(id, description, tarif);
-        this.numeroVol = numeroVol;
-        this.type = type;
-        this.compagnie = compagnie;
-        this.aeroportDepart = aeroportDepart;
-        this.aeroportArrivee = aeroportArrivee;
-        this.heureDepart = heureDepart;
-        this.heureArrivee = heureArrivee;
-    }
 
-    private int numeroVol;
+
     private TypeVol type;
-    private String compagnie;
+    private String compagnieDepart;
     private String aeroportDepart;
     private String aeroportArrivee;
     private Date heureDepart;
     private Date heureArrivee;
+    private Date dateArrivee;
 
-
-    public int getNumeroVol() {
-        return numeroVol;
+    public Vol(int id, String description, float tarif, TypeVol type, String compagnieDepart, String aeroportDepart, String aeroportArrivee, Date heureDepart, Date heureArrivee, Date dateArrivee) {
+        super(id, description, tarif);
+        this.type = type;
+        this.compagnieDepart = compagnieDepart;
+        this.aeroportDepart = aeroportDepart;
+        this.aeroportArrivee = aeroportArrivee;
+        this.heureDepart = heureDepart;
+        this.heureArrivee = heureArrivee;
+        this.dateArrivee = dateArrivee;
     }
 
-    public void setNumeroVol(int numeroVol) {
-        this.numeroVol = numeroVol;
-    }
 
     public TypeVol getType() {
         return type;
@@ -44,11 +38,11 @@ public class Vol extends Offre{
     }
 
     public String getCompagnie() {
-        return compagnie;
+        return compagnieDepart;
     }
 
     public void setCompagnie(String compagnie) {
-        this.compagnie = compagnie;
+        this.compagnieDepart = compagnie;
     }
 
     public String getAeroportDepart() {
@@ -88,24 +82,41 @@ public class Vol extends Offre{
         if (this == o) return true;
         if (!(o instanceof Vol vol)) return false;
         if (!super.equals(o)) return false;
-        return numeroVol == vol.numeroVol && type == vol.type && Objects.equals(compagnie, vol.compagnie) && Objects.equals(aeroportDepart, vol.aeroportDepart) && Objects.equals(aeroportArrivee, vol.aeroportArrivee) && Objects.equals(heureDepart, vol.heureDepart) && Objects.equals(heureArrivee, vol.heureArrivee);
+        return  type == vol.type && Objects.equals(compagnieDepart, vol.compagnieDepart) && Objects.equals(aeroportDepart, vol.aeroportDepart) && Objects.equals(aeroportArrivee, vol.aeroportArrivee) && Objects.equals(heureDepart, vol.heureDepart) && Objects.equals(heureArrivee, vol.heureArrivee)&& Objects.equals(dateArrivee, vol.dateArrivee);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numeroVol, type, compagnie, aeroportDepart, aeroportArrivee, heureDepart, heureArrivee);
+        return Objects.hash(type, compagnieDepart, aeroportDepart, aeroportArrivee, heureDepart, heureArrivee,dateArrivee);
+    }
+
+    public String getCompagnieDepart() {
+        return compagnieDepart;
+    }
+
+    public void setCompagnieDepart(String compagnieDepart) {
+        this.compagnieDepart = compagnieDepart;
+    }
+
+    public Date getDateArrivee() {
+        return dateArrivee;
+    }
+
+    public void setDateArrivee(Date dateArrivee) {
+        this.dateArrivee = dateArrivee;
     }
 
     @Override
     public String toString() {
         return "Vol{" +
-                "numeroVol=" + numeroVol +
-                ", type=" + type +
-                ", compagnie='" + compagnie + '\'' +
+                "id='" + getId() + '\''+
+                ", type='" + type + '\''+
+                ", compagnie='" + compagnieDepart + '\'' +
                 ", aeroportDepart='" + aeroportDepart + '\'' +
                 ", aeroportArrivee='" + aeroportArrivee + '\'' +
                 ", heureDepart=" + heureDepart +
                 ", heureArrivee=" + heureArrivee +
+                ", dateArrivee='" + dateArrivee + '\'' +
                 '}';
     }
 }
