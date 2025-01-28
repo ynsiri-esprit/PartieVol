@@ -23,7 +23,7 @@ public class SupportTechServiceImpl implements ISupportTechService {
 
     @Override
     public void ajouter(SupportTech supportTech) throws SQLException {
-        String req = "INSERT INTO `support_tech` (`login`, `motdepasse`, `codeAppli`) VALUES (?, ?, ?)";
+        String req = "INSERT INTO `supporttech` (`login`, `motdepasse`, `codeAppli`) VALUES (?, ?, ?)";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, supportTech.getLogin());
         pre.setString(2, supportTech.getMotDePasse());
@@ -34,7 +34,7 @@ public class SupportTechServiceImpl implements ISupportTechService {
 
     @Override
     public void supprimer(SupportTech supportTech) throws SQLException {
-        String req = "DELETE FROM `support_tech` WHERE `login` = ?";
+        String req = "DELETE FROM `supporttech` WHERE `login` = ?";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, supportTech.getLogin());
         pre.executeUpdate();
@@ -43,7 +43,7 @@ public class SupportTechServiceImpl implements ISupportTechService {
 
     @Override
     public void update(SupportTech supportTech) throws SQLException {
-        String req = "UPDATE `support_tech` SET `motdepasse` = ?, `codeAppli` = ? WHERE `login` = ?";
+        String req = "UPDATE `supporttech` SET `motdepasse` = ?, `codeAppli` = ? WHERE `login` = ?";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, supportTech.getMotDePasse());
         pre.setInt(2, supportTech.getCodeAppli());
@@ -59,7 +59,7 @@ public class SupportTechServiceImpl implements ISupportTechService {
 
     @Override
     public SupportTech getByLogin(String login) throws SQLException {
-        String req = "SELECT * FROM `support_tech` WHERE `login` = ?";
+        String req = "SELECT * FROM `supporttech` WHERE `login` = ?";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, login);
         ResultSet rs = pre.executeQuery();
@@ -75,7 +75,7 @@ public class SupportTechServiceImpl implements ISupportTechService {
 
     @Override
     public SupportTech checkSupportByCode(int code) throws SQLException {
-        String req = "SELECT * FROM `support_tech` WHERE `codeAppli` = ?";
+        String req = "SELECT * FROM `supporttech` WHERE `codeAppli` = ?";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setInt(1, code);
         ResultSet rs = pre.executeQuery();
@@ -94,7 +94,7 @@ public class SupportTechServiceImpl implements ISupportTechService {
     @Override
     public List<SupportTech> getAll() throws SQLException {
         List<SupportTech> supports = new ArrayList<>();
-        ResultSet rs = st.executeQuery("SELECT * FROM `support_tech`");
+        ResultSet rs = st.executeQuery("SELECT * FROM `supporttech`");
         while (rs.next()) {
             supports.add(new SupportTech(
                     rs.getString("login"),
