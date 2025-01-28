@@ -1,17 +1,15 @@
 package Services.Impl;
-
 import Entities.TypeVol;
 import Entities.Vol;
 import Services.IVolServices;
 import Utils.DataSource;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VolServicesImpl implements IVolServices {
 
-    private Connection con = DataSource.getInstance().getConn();
+    private final Connection con = DataSource.getInstance().getConn();
     private Statement st;
 
     public VolServicesImpl() {
@@ -23,20 +21,19 @@ public class VolServicesImpl implements IVolServices {
     }
 
     public void ajouter(Vol vol) throws SQLException {
-        String req = "INSERT INTO `vol` (`numeroVol`, `description`, `tarif`, `type`, `compagnie`, `aeroportDepart`, `aeroportArrivee`,`heureDepart`,`heureArrivee`) " +
+        String req = "INSERT INTO `vol` (`id`, `description`, `tarif`, `type`, `compagnieDepart`, `aeroportDepart`, `aeroportArrivee`,`heureDepart`,`heureArrivee`,`dateArrivee`) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setInt(1, vol.getId());
         pre.setString(2, vol.getDescription());
         pre.setFloat(3, vol.getTarif());
-        pre.setInt(4, vol.getNumeroVol());
-        pre.setString(5, vol.getType().toString());
-        pre.setString(6, vol.getCompagnie());
-        pre.setString(7, vol.getAeroportDepart());
-        pre.setString(8, vol.getAeroportArrivee());
-        pre.setDate(9, new java.sql.Date(vol.getHeureDepart().getTime()));
+        pre.setString(4, vol.getType().toString());
+        pre.setString(5, vol.getCompagnie());
+        pre.setString(6, vol.getAeroportDepart());
+        pre.setString(7, vol.getAeroportArrivee());
+        pre.setTimestamp(8, new java.sql.Timestamp(vol.getHeureDepart().getTime()));
+        pre.setTimestamp(9, new java.sql.Timestamp(vol.getHeureArrivee().getTime()));
         pre.setDate(10, new java.sql.Date(vol.getHeureArrivee().getTime()));
-
         pre.executeUpdate();
         System.out.println("Vol ajouté avec succès !");
     }
@@ -50,19 +47,21 @@ public class VolServicesImpl implements IVolServices {
     }
 
     public void update(Vol vol) throws SQLException {
-        String req = "UPDATE `vol` SET `id` = ?, `description` = ?, `tarif` = ?, `numeroVol` = ?, `type` = ?, `compagnie` = ?, `aeroportDepart` = ?, `aeroportArrivee` = ?, `heureDepart` = ?, `heureArrivee` = ?" +
-                "WHERE `id` = ?";
+        String req = "UPDATE `vol` SET `description`=?, `tarif`=?, `type`=?, `compagnieDepart`=?, `aeroportDepart`=?, `aeroportArrivee`=?,`heureDepart`=?,`heureArrivee`=?,`dateArrivee`=?" +
+                "WHERE `id`= ?;" ;
+
         PreparedStatement pre = con.prepareStatement(req);
-        pre.setInt(1, vol.getId());
-        pre.setString(2, vol.getDescription());
-        pre.setFloat(3, vol.getTarif());
-        pre.setInt(4, vol.getNumeroVol());
-        pre.setString(5, vol.getType().toString());
-        pre.setString(6, vol.getCompagnie());
-        pre.setString(7, vol.getAeroportDepart());
-        pre.setString(8, vol.getAeroportArrivee());
-        pre.setDate(9, new java.sql.Date(vol.getHeureDepart().getTime()));
-        pre.setDate(10, new java.sql.Date(vol.getHeureArrivee().getTime()));
+        pre.setString(1, vol.getDescription());
+        pre.setFloat(2, vol.getTarif());
+        pre.setString(3, vol.getType().toString());
+        pre.setString(4, vol.getCompagnie());
+        pre.setString(5, vol.getAeroportDepart());
+        pre.setString(6, vol.getAeroportArrivee());
+        pre.setTimestamp(7, new java.sql.Timestamp(vol.getHeureDepart().getTime()));
+        pre.setTimestamp(8, new java.sql.Timestamp(vol.getHeureArrivee().getTime()));
+        pre.setDate(9, new java.sql.Date(vol.getHeureArrivee().getTime()));
+        pre.setInt(10, vol.getId());
+
         pre.executeUpdate();
         System.out.println("Vol mis à jour avec succès !");
     }
@@ -78,14 +77,15 @@ public class VolServicesImpl implements IVolServices {
                     v.setId(rs.getInt("id"));
                     v.setDescription(rs.getString("description"));
                     v.setTarif(rs.getFloat("tarif"));
-                    v.setNumeroVol(rs.getInt("numeroVol"));
-                    v.setNumeroVol(rs.getInt("numeroVol"));
-                    v.setType(TypeVol.valueOf(rs.getString("type")));
-                    v.setCompagnie(rs.getString("compagnie"));
+                    v.setType(TypeVol.valueOf(rs.getString("type").toLowerCase()));
+                    v.setCompagnie(rs.getString("compagnieDepart"));
                     v.setAeroportDepart(rs.getString("aeroportDepart"));
                     v.setAeroportArrivee(rs.getString("aeroportArrivee"));
                     v.setHeureDepart(rs.getDate("heureDepart"));
                     v.setHeureArrivee(rs.getDate("heureArrivee"));
+            v.setHeureArrivee(rs.getDate("heureArrivee"));
+            v.setDateArrivee(rs.getDate("dateArrivee"));
+
             return  v;
         }
         return null;
@@ -100,9 +100,8 @@ public class VolServicesImpl implements IVolServices {
             v.setId(rs.getInt("id"));
             v.setDescription(rs.getString("description"));
             v.setTarif(rs.getFloat("tarif"));
-            v.setNumeroVol(rs.getInt("numeroVol"));
-            v.setType(TypeVol.valueOf(rs.getString("type")));
-            v.setCompagnie(rs.getString("compagnie"));
+            v.setType(TypeVol.valueOf(rs.getString("type").toLowerCase()));
+            v.setCompagnie(rs.getString("compagnieDepart"));
             v.setAeroportDepart(rs.getString("aeroportDepart"));
             v.setAeroportArrivee(rs.getString("aeroportArrivee"));
             v.setHeureDepart(rs.getDate("heureDepart"));
