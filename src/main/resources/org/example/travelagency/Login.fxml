@@ -20,7 +20,7 @@
          <children>
             <TextField fx:id="loginField" layoutX="149.0" layoutY="189.0" promptText="Login" style="-fx-background-color: transparent; -fx-border-color: #023047; -fx-border-width: 0px 0px 2px 0px;" />
             <PasswordField fx:id="passwordField" layoutX="150.0" layoutY="256.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #023047; -fx-border-width: 0px 0px 2px 0px;" />
-            <Button layoutX="180.0" layoutY="351.0" mnemonicParsing="false" onAction="#handleLoginButtonAction" style="-fx-background-color: #023047;" text="Login" textFill="WHITE" />
+            <Button layoutX="180.0" layoutY="351.0" mnemonicParsing="false" onAction="#loginAgent" style="-fx-background-color: #023047;" text="Login" textFill="WHITE" />
             <Hyperlink layoutX="139.0" layoutY="438.0" text="Create new account">
                <font>
                   <Font size="14.0" />
