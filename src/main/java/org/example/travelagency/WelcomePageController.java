@@ -2,7 +2,13 @@ package org.example.travelagency;
 
 import Services.Impl.AgentServiceImpl;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class WelcomePageController {
     @FXML
@@ -26,7 +32,10 @@ public class WelcomePageController {
     @FXML
     private Label Name;
 
-    // Méthode d'initialisation pour charger les données (sans passer le userName ici)
+    @FXML
+    private MenuItem TripList;
+
+
     public void initialize() {
         loadData();
     }
@@ -68,8 +77,44 @@ public class WelcomePageController {
         }
     }
 
-    // Méthode pour définir le nom de l'utilisateur dans le Label
     public void setUserName(String userName) {
-        Name.setText(userName);  // Afficher le nom d'utilisateur dans le Label
+        Name.setText(userName);
     }
+
+    public void GoListTrip() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("BookingList.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 744, 400);
+        Stage stage = new Stage();
+        stage.setTitle("Liste des voyages");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void AddTrip() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("AddTripForm.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1250, 400);
+        Stage stage = new Stage();
+        stage.setTitle("Ajout d'un voyage");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void FlightList() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ListFlight.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1250, 400);
+        Stage stage = new Stage();
+        stage.setTitle("Liste des vols");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void AddFlight() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("AddFlight.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1250, 400);
+        Stage stage = new Stage();
+        stage.setTitle("Ajouter un vol");
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }
