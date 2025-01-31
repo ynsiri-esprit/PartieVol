@@ -102,6 +102,22 @@ public class ClientServiceImpl implements IService<Client> {
         }
         return clients;
     }
+    public static boolean seConnecter(String login, String motDePasse) {  // Méthode Se connecter
+        String sql = "SELECT * FROM client WHERE login = ? AND motDePasse = ?";
+        try (Connection conn = DataSource.getInstance().getConn();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, login);
+            stmt.setString(2, motDePasse);
+            ResultSet rs = stmt.executeQuery();
+
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        //test
+    }
 
 }
 
