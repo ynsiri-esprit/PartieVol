@@ -84,4 +84,6 @@ public class SejourHotel extends Offre {
                 ", noteMoyenne=" + noteMoyenne +
                 '}';
     }
+
+
 }

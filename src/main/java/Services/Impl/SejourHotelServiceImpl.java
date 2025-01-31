@@ -1,5 +1,6 @@
 package Services.Impl;
 
+import Entities.Reservation;
 import Entities.SejourHotel;
 import Services.ISejourHotelService;
 import Utils.DataSource;
@@ -103,6 +104,52 @@ public class SejourHotelServiceImpl implements ISejourHotelService {
                     rs.getDouble("noteMoyenne")
             ));
         }
+        return sejours;
+    }
+    @Override
+    public List<SejourHotel> getSejourHotelByCriteria(SejourHotel criteria) throws SQLException {
+        List<SejourHotel> sejours = new ArrayList<>();
+
+        String query = "SELECT * FROM `SejourHotel` WHERE "
+                + "(? IS NULL OR `nomHotel` LIKE ?) "
+                + "AND (? = 0 OR `nbChambresDispo` = ?) "
+                + "AND (? IS NULL OR `adresse` LIKE ?) "
+                + "AND (? = 0 OR `nombreEtoiles` = ?) "
+                + "AND (? = 0 OR `tarifParNuit` <= ?) "
+                + "AND (? = 0 OR `noteMoyenne` >= ?)";
+
+        PreparedStatement pre = con.prepareStatement(query);
+
+        // Remplir les paramètres avec les valeurs de l'objet SejourHotel
+        pre.setObject(1, criteria.getNomHotel() != null ? criteria.getNomHotel() : null);
+        pre.setObject(2, criteria.getNomHotel() != null ? "%" + criteria.getNomHotel() + "%" : null); // Recherche partielle avec LIKE
+        pre.setObject(3, criteria.getNbrChambresDispo() != 0 ? criteria.getNbrChambresDispo() : 0);
+        pre.setObject(4, criteria.getNbrChambresDispo() != 0 ? criteria.getNbrChambresDispo() : 0);
+        pre.setObject(5, criteria.getAdresse() != null ? criteria.getAdresse() : null);
+        pre.setObject(6, criteria.getAdresse() != null ? "%" + criteria.getAdresse() + "%" : null); // Recherche partielle avec LIKE
+        pre.setObject(7, criteria.getNbrEtoiles() != 0 ? criteria.getNbrEtoiles() : 0);
+        pre.setObject(8, criteria.getNbrEtoiles() != 0 ? criteria.getNbrEtoiles() : 0);
+        pre.setObject(9, criteria.getTarifParNuit() != 0 ? criteria.getTarifParNuit() : 0);
+        pre.setObject(10, criteria.getTarifParNuit() != 0 ? criteria.getTarifParNuit() : 0);
+        pre.setObject(11, criteria.getNoteMoyenne() != 0 ? criteria.getNoteMoyenne() : 0);
+        pre.setObject(12, criteria.getNoteMoyenne() != 0 ? criteria.getNoteMoyenne() : 0);
+
+        ResultSet rs = pre.executeQuery();
+
+        while (rs.next()) {
+            SejourHotel sejour = new SejourHotel();
+            sejour.setId(rs.getInt("id"));
+            sejour.setDescription(rs.getString("description"));
+            sejour.setTarif(rs.getFloat("tarif"));
+            sejour.setNomHotel(rs.getString("nomHotel"));
+            sejour.setNbrChambresDispo(rs.getInt("nbChambresDispo"));
+            sejour.setAdresse(rs.getString("adresse"));
+            sejour.setNbrEtoiles(rs.getInt("nombreEtoiles"));
+            sejour.setTarifParNuit(rs.getDouble("tarifParNuit"));
+            sejour.setNoteMoyenne(rs.getDouble("noteMoyenne"));
+            sejours.add(sejour);
+        }
+
         return sejours;
     }
 }

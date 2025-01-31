@@ -1,8 +1,6 @@
 package Entities;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class VoyageOrganise extends Offre {
 
@@ -65,5 +63,19 @@ public class VoyageOrganise extends Offre {
                 ", pointsIneret=" + pointsIneret +
                 ", guideDisponible=" + guideDisponible +
                 '}';
+    }
+    public String getItinerairesAsString() {
+        if (itineraires == null || itineraires.isEmpty()) {
+            return "";
+        }
+        return String.join("/", itineraires); // Convertir la liste en une chaîne séparée par "/"
+    }
+
+    public void setItinerairesFromString(String itinerairesString) {
+        if (itinerairesString == null || itinerairesString.isEmpty()) {
+            this.itineraires = new ArrayList<>();
+        } else {
+            this.itineraires = Arrays.asList(itinerairesString.split("/")); // Convertir la chaîne en liste
+        }
     }
 }
