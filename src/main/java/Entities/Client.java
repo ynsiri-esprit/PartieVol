@@ -18,7 +18,7 @@ public class Client extends Visiteur {
         return ClientServiceImpl.seConnecter(this.getLogin(), this.getMotDePasse());  // Appel direct à la méthode statique
     }
 
-
+//
     //  une réservation
    /* public void annulerReservation(int reservationId) {
         ReservationServiceImpl reservationService = new ReservationServiceImpl();
