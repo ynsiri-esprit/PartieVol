@@ -4,7 +4,6 @@ import Entities.Agent;
 import Services.IAgentService;
 import Utils.DataSource;
 
-import javax.mail.MessagingException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,11 +93,11 @@ public class AgentServiceImpl implements IAgentService {
                     rs.getString("cin"),
                     rs.getString("nom"),
                     rs.getString("prenom"),
-                    rs.getDate("date_naissance"),
+                    rs.getDate("dateNaissance"),
                     rs.getString("email"),
                     rs.getString("telephone"),
                     rs.getString("login"),
-                    rs.getString("mot_de_passe")
+                    rs.getString("motDePasse")
             ));
         }
         return agents;
