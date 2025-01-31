@@ -7,24 +7,47 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelagency.LoginController">
+<AnchorPane prefHeight="400.0" prefWidth="744.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.travelagency.LoginController">
+
    <children>
-      <AnchorPane prefHeight="500.0" prefWidth="298.0" style="-fx-background-color: #023047;">
+      <!-- Panneau gauche -->
+      <AnchorPane prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #023047;">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="49.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="120.0" fitWidth="180.0" layoutX="60.0" layoutY="140.0"
+                       pickOnBounds="true" preserveRatio="true"/>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="298.0" prefHeight="500.0" prefWidth="446.0">
+
+      <!-- Panneau droit -->
+      <AnchorPane layoutX="300.0" prefHeight="400.0" prefWidth="444.0" style="-fx-background-color: #f8f9fa;">
          <children>
-            <TextField fx:id="loginField" layoutX="149.0" layoutY="189.0" promptText="Login" style="-fx-background-color: transparent; -fx-border-color: #023047; -fx-border-width: 0px 0px 2px 0px;" />
-            <PasswordField fx:id="passwordField" layoutX="150.0" layoutY="256.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #023047; -fx-border-width: 0px 0px 2px 0px;" />
-            <Button fx:id="loginButton" layoutX="180.0" layoutY="351.0" mnemonicParsing="false" onAction="#loginAgent" style="-fx-background-color: #023047;" text="Login" textFill="WHITE"/>
-            <Hyperlink layoutX="139.0" layoutY="438.0" text="Create new account">
-            </Hyperlink>
-            <Hyperlink layoutX="148.0" layoutY="406.0" text="Forget password?" />
-            <Label layoutX="161.0" layoutY="108.0" text="sign-in" textAlignment="CENTER" textFill="#023047" textOverrun="CENTER_WORD_ELLIPSIS" underline="true">
-            </Label>
+            <VBox layoutX="70.0" layoutY="90.0" spacing="15.0" alignment="CENTER">
+               <children>
+                  <Label text="Sign In" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #023047;" />
+
+                  <TextField fx:id="loginField" promptText="Login"
+                             style="-fx-background-color: #ffffff; -fx-border-color: #8ECAE6;
+                                          -fx-border-radius: 8px; -fx-padding: 10px;"/>
+
+                  <PasswordField fx:id="passwordField" promptText="Password"
+                                 style="-fx-background-color: #ffffff; -fx-border-color: #8ECAE6;
+                                              -fx-border-radius: 8px; -fx-padding: 10px;"/>
+
+                  <!-- Centrage du bouton -->
+                  <Button fx:id="loginButton" text="Login" onAction="#loginAgent"
+                          style="-fx-background-color: #023047; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8px;"/>
+                  <!-- Ajout d'une VBox pour centrer les liens -->
+                  <VBox spacing="5.0" alignment="CENTER">
+                     <Hyperlink text="Forgot password?" style="-fx-text-fill: #023047;" />
+                     <Hyperlink text="Create new account" style="-fx-text-fill: #023047;" />
+                  </VBox>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
    </children>
