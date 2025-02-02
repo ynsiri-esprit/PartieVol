@@ -3,10 +3,11 @@ package Services.Impl;
 import Entities.Agent;
 import Services.IAgentService;
 import Utils.DataSource;
+
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
 
 public class AgentServiceImpl implements IAgentService {
     private Connection con = DataSource.getInstance().getConn();
@@ -22,7 +23,7 @@ public class AgentServiceImpl implements IAgentService {
 
     @Override
     public void ajouter(Agent agent) throws SQLException {
-        String req = "INSERT INTO `agent` (`cin`, `nom`, `prenom`, `date_naissance`, `email`, `telephone`, `login`, `mot_de_passe`) " +
+        String req = "INSERT INTO `utilisateur` (`cin`, `nom`, `prenom`, `date_naissance`, `email`, `telephone`, `login`, `mot_de_passe`) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, agent.getCin());
@@ -39,7 +40,7 @@ public class AgentServiceImpl implements IAgentService {
 
     @Override
     public void supprimer(Agent agent) throws SQLException {
-        String req = "DELETE FROM `agent` WHERE `cin` = ?";
+        String req = "DELETE FROM `utilisateur` WHERE `cin` = ?";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, agent.getCin());
         pre.executeUpdate();
@@ -48,7 +49,7 @@ public class AgentServiceImpl implements IAgentService {
 
     @Override
     public void update(Agent agent) throws SQLException {
-        String req = "UPDATE `agent` SET `nom` = ?, `prenom` = ?, `date_naissance` = ?, `email` = ?, `telephone` = ?, `login` = ?, `mot_de_passe` = ? " +
+        String req = "UPDATE `utilisateur` SET `nom` = ?, `prenom` = ?, `date_naissance` = ?, `email` = ?, `telephone` = ?, `login` = ?, `mot_de_passe` = ? " +
                 "WHERE `cin` = ?";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, agent.getNom());
@@ -65,7 +66,7 @@ public class AgentServiceImpl implements IAgentService {
 
     @Override
     public Agent getById(int id) throws SQLException {
-        String req = "SELECT * FROM `agent` WHERE `id` = ?";
+        String req = "SELECT * FROM `utilisateur` WHERE `id` = ?";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setInt(1, id);
         ResultSet rs = pre.executeQuery();
@@ -87,7 +88,7 @@ public class AgentServiceImpl implements IAgentService {
     @Override
     public List<Agent> getAll() throws SQLException {
         List<Agent> agents = new ArrayList<>();
-        ResultSet rs = st.executeQuery("SELECT * FROM `agent`");
+        ResultSet rs = st.executeQuery("SELECT * FROM `utilisateur`");
         while (rs.next()) {
             agents.add(new Agent(
                     rs.getString("cin"),
@@ -120,7 +121,7 @@ public class AgentServiceImpl implements IAgentService {
     @Override
     public boolean Login(String login,String password) throws SQLException {
         int count=0;
-        String req = "SELECT count(*) AS NB FROM `agent` WHERE `login` = ? AND `motDePasse` = ?";
+        String req = "SELECT count(*) AS NB FROM `utilisateur` WHERE `login` = ? AND `motDePasse` = ?";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, login);
         pre.setString(2, password);

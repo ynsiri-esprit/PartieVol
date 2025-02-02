@@ -20,9 +20,26 @@ public class ClientServiceImpl implements IService<Client> {
         }
     }
 
+    public static boolean seConnecter(String login, String motDePasse) {  // Méthode Se connecter
+        String sql = "SELECT * FROM utilisateur WHERE login = ? AND motDePasse = ?";
+        try (Connection conn = DataSource.getInstance().getConn();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, login);
+            stmt.setString(2, motDePasse);
+            ResultSet rs = stmt.executeQuery();
+
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        //test
+    }
+
     @Override
     public void ajouter(Client client) throws SQLException {
-        String req = "INSERT INTO `client` (`cin`, `nom`, `prenom`, `date_naissance`, `email`, `telephone`, `login`, `mot_de_passe`) " +
+        String req = "INSERT INTO `utilisateur` (`cin`, `nom`, `prenom`, `date_naissance`, `email`, `telephone`, `login`, `mot_de_passe`) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, client.getCin());
@@ -39,7 +56,7 @@ public class ClientServiceImpl implements IService<Client> {
 
     @Override
     public void supprimer(Client client) throws SQLException {
-        String req = "DELETE FROM `client` WHERE `cin` = ?";
+        String req = "DELETE FROM `utilisateur` WHERE `cin` = ?";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, client.getCin());
         pre.executeUpdate();
@@ -48,7 +65,7 @@ public class ClientServiceImpl implements IService<Client> {
 
     @Override
     public void update(Client client) throws SQLException {
-        String req = "UPDATE `client` SET `nom` = ?, `prenom` = ?, `date_naissance` = ?, `email` = ?, `telephone` = ?, `login` = ?, `mot_de_passe` = ? " +
+        String req = "UPDATE `utilisateur` SET `nom` = ?, `prenom` = ?, `date_naissance` = ?, `email` = ?, `telephone` = ?, `login` = ?, `mot_de_passe` = ? " +
                 "WHERE `cin` = ?";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, client.getNom());
@@ -65,7 +82,7 @@ public class ClientServiceImpl implements IService<Client> {
 
     @Override
     public Client getById(int id) throws SQLException {
-        String req = "SELECT * FROM `client` WHERE `id` = ?";
+        String req = "SELECT * FROM `utilisateur` WHERE `id` = ?";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setInt(1, id);
         ResultSet rs = pre.executeQuery();
@@ -87,7 +104,7 @@ public class ClientServiceImpl implements IService<Client> {
     @Override
     public List<Client> getAll() throws SQLException {
         List<Client> clients = new ArrayList<>();
-        ResultSet rs = st.executeQuery("SELECT * FROM `client`");
+        ResultSet rs = st.executeQuery("SELECT * FROM `utilisateur`");
         while (rs.next()) {
             clients.add(new Client(
                     rs.getString("cin"),
@@ -101,22 +118,6 @@ public class ClientServiceImpl implements IService<Client> {
             ));
         }
         return clients;
-    }
-    public static boolean seConnecter(String login, String motDePasse) {  // Méthode Se connecter
-        String sql = "SELECT * FROM client WHERE login = ? AND motDePasse = ?";
-        try (Connection conn = DataSource.getInstance().getConn();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, login);
-            stmt.setString(2, motDePasse);
-            ResultSet rs = stmt.executeQuery();
-
-            return rs.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        //test
     }
 
 }
