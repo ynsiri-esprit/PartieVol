@@ -1,6 +1,9 @@
 package Entities;
 
+import java.util.List;
+
 public abstract class Offre {
+    List<Partner> partners;
     private int id;
     private String description;
     private float tarif;
@@ -17,6 +20,14 @@ public abstract class Offre {
     }
 
     // Getters and setters
+    public List<Partner> getPartners() {
+        return partners;
+    }
+
+    public void setPartners(List<Partner> partners) {
+        this.partners = partners;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,14 +1,11 @@
 package Entities;
 
+import enums.TypeVol;
+
 import java.util.Date;
 import java.util.Objects;
 
 public class Vol extends Offre{
-    public Vol(){
-    }
-
-
-
     private TypeVol type;
     private String compagnieDepart;
     private String aeroportDepart;
@@ -16,6 +13,8 @@ public class Vol extends Offre{
     private Date heureDepart;
     private Date heureArrivee;
     private Date dateArrivee;
+    public Vol(){
+    }
 
     public Vol(int id, String description, float tarif, TypeVol type, String compagnieDepart, String aeroportDepart, String aeroportArrivee, Date heureDepart, Date heureArrivee, Date dateArrivee) {
         super(id, description, tarif);

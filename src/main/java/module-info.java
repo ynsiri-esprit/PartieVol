@@ -8,4 +8,5 @@ module org.example.travelagency {
     opens org.example.travelagency to javafx.fxml;
     exports org.example.travelagency;
     exports Entities;
+    exports enums;
 }

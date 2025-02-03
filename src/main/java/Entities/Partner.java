@@ -15,6 +15,20 @@ public class Partner {
     private String phone;
     private String address;
 
+    public Partner() {
+    }
+
+    public Partner(String name, int id, PartnerCategory category, PartnerType type,
+                   String contact, String email, String phone, String address) {
+        this.name = name;
+        this.id = id;
+        this.category = category;
+        this.type = type;
+        this.contact = contact;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+    }
 
     public int getId() {
         return id;

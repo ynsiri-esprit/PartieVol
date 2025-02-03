@@ -1,4 +1,4 @@
-package Entities;
+package enums;
 
 public enum TypeVol {
 

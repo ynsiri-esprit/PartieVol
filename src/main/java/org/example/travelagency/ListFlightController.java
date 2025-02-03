@@ -1,23 +1,22 @@
 package org.example.travelagency;
 
 import Entities.Vol;
-import Entities.TypeVol;
-import Entities.VoyageOrganise;
 import Services.Impl.VolServicesImpl;
-import Services.Impl.VoyageOrganiseImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListFlightController {
+    private final VolServicesImpl volService = new VolServicesImpl();
     @FXML
     private TableView<Vol> tableView;
     @FXML
@@ -38,8 +37,6 @@ public class ListFlightController {
     private TableColumn<Vol, String> colHeureArrivee;
     @FXML
     private TableColumn<Vol, Void> colAction;
-
-    private final VolServicesImpl volService = new VolServicesImpl();
 
     public void initialize() {
         try {

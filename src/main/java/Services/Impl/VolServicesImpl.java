@@ -1,8 +1,10 @@
 package Services.Impl;
-import Entities.TypeVol;
+
 import Entities.Vol;
 import Services.IVolServices;
 import Utils.DataSource;
+import enums.TypeVol;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
