@@ -9,7 +9,7 @@ import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+//La premiere page a afficher apres la connexion
 public class WelcomePageController {
     @FXML
     private Label travelCountLabel;
@@ -35,7 +35,7 @@ public class WelcomePageController {
     @FXML
     private MenuItem TripList;
 
-
+//La premiere methode a executer
     public void initialize() {
         loadData();
     }
@@ -75,6 +75,7 @@ public class WelcomePageController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+//        Name.setText();
     }
 
     public void setUserName(String userName) {
@@ -116,5 +117,6 @@ public class WelcomePageController {
         stage.setScene(scene);
         stage.show();
     }
+
 
 }
