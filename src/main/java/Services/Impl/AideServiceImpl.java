@@ -23,7 +23,7 @@ public class AideServiceImpl implements IAideService {
 
     @Override
     public void ajouter(Aide aide) throws SQLException {
-        String req = "INSERT INTO `aide` (`question`, `reponse`) VALUES (?, ?)";
+        String req = "INSERT INTO `aide` (`question`, `response`) VALUES (?, ?)";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, aide.getQuestion());
         pre.setString(2, aide.getReponse());
@@ -42,7 +42,7 @@ public class AideServiceImpl implements IAideService {
 
     @Override
     public void update(Aide aide) throws SQLException {
-        String req = "UPDATE `aide` SET `question` = ?, `reponse` = ? WHERE `id` = ?";
+        String req = "UPDATE `aide` SET `question` = ?, `response` = ? WHERE `id` = ?";
         PreparedStatement pre = con.prepareStatement(req);
         pre.setString(1, aide.getQuestion());
         pre.setString(2, aide.getReponse());
@@ -61,7 +61,7 @@ public class AideServiceImpl implements IAideService {
             return new Aide(
                     rs.getInt("id"),
                     rs.getString("question"),
-                    rs.getString("reponse")
+                    rs.getString("response")
             );
         }
         return null;
@@ -75,7 +75,7 @@ public class AideServiceImpl implements IAideService {
             aides.add(new Aide(
                     rs.getInt("id"),
                     rs.getString("question"),
-                    rs.getString("reponse")
+                    rs.getString("response")
             ));
         }
         return aides;
@@ -92,7 +92,7 @@ public class AideServiceImpl implements IAideService {
             aides.add(new Aide(
                     rs.getInt("id"),
                     rs.getString("question"),
-                    rs.getString("reponse")
+                    rs.getString("response")
             ));
         }
         return aides;

@@ -1,62 +1,57 @@
 package Entities;
 
-public class Aide {
-    private int id;
-    private String question;
-    private String reponse;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-    // Constructeurs
-    public Aide() {
-    }
+public class Aide {
+    private final IntegerProperty id;
+    private final StringProperty question;
+    private final StringProperty reponse;
 
     public Aide(int id, String question, String reponse) {
-        this.id = id;
-        this.question = question;
-        this.reponse = reponse;
+        this.id = new SimpleIntegerProperty(id);
+        this.question = new SimpleStringProperty(question);
+        this.reponse = new SimpleStringProperty(reponse);
     }
 
-    // Getters et Setters
-    public int getId() {
+    // Getters pour les propriétés
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getQuestion() {
+    public StringProperty questionProperty() {
         return question;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getReponse() {
+    public StringProperty reponseProperty() {
         return reponse;
     }
 
+    // Getters classiques
+    public int getId() {
+        return id.get();
+    }
+
+    // Setters
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public String getQuestion() {
+        return question.get();
+    }
+
+    public void setQuestion(String question) {
+        this.question.set(question);
+    }
+
+    public String getReponse() {
+        return reponse.get();
+    }
+
     public void setReponse(String reponse) {
-        this.reponse = reponse;
-    }
-
-    // toString
-    @Override
-    public String toString() {
-        return "Aide{" +
-                "id=" + id +
-                ", question='" + question + '\'' +
-                ", reponse='" + reponse + '\'' +
-                '}';
-    }
-
-    // equals
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Aide aide = (Aide) o;
-        return id == aide.id;
+        this.reponse.set(reponse);
     }
 }
-
