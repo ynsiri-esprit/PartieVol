@@ -1,17 +1,12 @@
 package enums;
 
 public enum PartnerType {
-    COMPAGNIE_AERIENNE,
-    AGENCE_BILLETTERIE,
-    ASSURANCE,
-    AEROPORT,
-    HOTEL,
-    PLATEFORME_RESERVATION,
-    LOCATION_MAISON,
-    FOURNISSEUR_SERVICE,
-    AGENCE_VOYAGE,
-    TRANSPORT,
-    ACTIVITE_TOURISTIQUE,
-    GUIDE,
-    RESTAURATION
+    COMPAGNIE_AERIENNE("Compagnie Aérienne"),
+    HOTEL("Hôtel"),
+    AGENCE_VOYAGE("Agence Voyage"),
+    TRANSPORT("Transport"),
+    AUTRE("Autre");
+
+    PartnerType(String value){}
+
 }
