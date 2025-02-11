@@ -1,11 +1,12 @@
 package Services.Impl;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import Entities.Agent;
 import Entities.Utilisateur;
 import Utils.DataSource;
-import Entities.Role;
+import enums.Role;
 
 
 
@@ -26,11 +27,11 @@ public class UtilisateurServiceImpl {
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, utilisateur.getNom());
             pstmt.setString(2, utilisateur.getPrenom());
-            pstmt.setString(3, utilisateur.getMotDePasse()); // ⚠ Pense à sécuriser le mot de passe
+            pstmt.setString(3, utilisateur.getMotDePasse());
             pstmt.setDate(4, Date.valueOf(utilisateur.getDateNaissance()));
             pstmt.setString(5, utilisateur.getTelephone());
             pstmt.setString(6, utilisateur.getEmail());
-            pstmt.setString(7, utilisateur.getRole().name()); // Enum en String
+            pstmt.setString(7, utilisateur.getRole().name());
 
             int rowsInserted = pstmt.executeUpdate();
             return rowsInserted > 0; // Retourne true si l'insertion a réussi
@@ -187,6 +188,19 @@ public class UtilisateurServiceImpl {
             return false;
         }
         return ajouterUtilisateur(utilisateur); // Réutilisation de la méthode ajouter()
+    }
+
+    public void sendEmailToAgent(Utilisateur agent) {
+        EmailService emailService = new EmailService();
+
+        String subject = "Vos informations de connexion à l'application Travel Tour";
+        String messageBody = "Bonjour " + agent.getNom() + " " + agent.getPrenom() + ",\n\n" +
+                "Voici vos informations de connexion :\n" +
+                "Login : " + agent.getEmail() + "\n" +
+                "Mot de passe : " + agent.getMotDePasse() + "\n\n" +
+                "Cordialement,\nL'équipe support Travel Tour";
+
+        emailService.sendEmail(agent.getEmail(), subject, messageBody);
     }
 
 }
