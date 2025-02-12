@@ -11,7 +11,7 @@
 <?import org.controlsfx.control.CheckComboBox?>
 <?import javafx.scene.control.CheckBox?>
 
-<AnchorPane prefHeight="744.0" prefWidth="450.0" style="-fx-background-color: #f1f1f1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelagency.AddFlightController">
+<AnchorPane prefHeight="744.0" prefWidth="450.0" style="-fx-background-color: #f1f1f1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelagency.UpdateTripController">
     <VBox alignment="TOP_CENTER" layoutX="20.0" layoutY="20.0" prefHeight="700.0" prefWidth="400.0" spacing="15">
         <!-- Title Label -->
         <Label text="Modifier Voyage Organisé" textFill="#023047" />
