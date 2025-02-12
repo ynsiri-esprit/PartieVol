@@ -7,8 +7,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -68,7 +72,7 @@ public class AideController {
             aideList.setAll(aides);  // Remplir la liste observable
             tableAide.setItems(aideList); // Mettre à jour la TableView
         } catch (SQLException e) {
-            afficherAlerte("Erreur", "Impossible de charger les aides", e.getMessage());
+            afficherAlerte(Alert.AlertType.ERROR, "Erreur", "Impossible de charger les aides", e.getMessage());
         }
     }
 
@@ -79,7 +83,7 @@ public class AideController {
         String reponse = txtReponse.getText().trim();
 
         if (question.isEmpty() || reponse.isEmpty()) {
-            afficherAlerte("Champ vide", "Veuillez remplir tous les champs.");
+            afficherAlerte(Alert.AlertType.WARNING, "Champ vide", null, "Veuillez remplir tous les champs.");
             return;
         }
 
@@ -91,7 +95,7 @@ public class AideController {
             txtReponse.clear();
             cbFiltre.setValue("Toutes");
         } catch (SQLException e) {
-            afficherAlerte("Erreur", "Ajout échoué", e.getMessage());
+            afficherAlerte(Alert.AlertType.ERROR, "Erreur", "Ajout échoué", e.getMessage());
         }
     }
 
@@ -107,12 +111,12 @@ public class AideController {
                 txtQuestion.clear();
                 txtReponse.clear();
                 cbFiltre.setValue("Toutes");
-                afficherAlerte("Succès", "Modification réussie.");
+                afficherAlerte(Alert.AlertType.INFORMATION, "Succès", null, "Modification réussie.");
             } catch (SQLException e) {
-                afficherAlerte("Erreur", "Échec de la modification.");
+                afficherAlerte(Alert.AlertType.ERROR, "Erreur", null, "Échec de la modification.");
             }
         } else {
-            afficherAlerte("Attention", "Veuillez sélectionner une ligne à modifier.");
+            afficherAlerte(Alert.AlertType.WARNING, "Attention", null, "Veuillez sélectionner une ligne à modifier.");
         }
     }
 
@@ -121,7 +125,7 @@ public class AideController {
     void supprimerAide(ActionEvent event) {
         Aide selectedAide = tableAide.getSelectionModel().getSelectedItem();
         if (selectedAide == null) {
-            afficherAlerte("Sélection requise", "Veuillez sélectionner une aide à supprimer.");
+            afficherAlerte(Alert.AlertType.WARNING, "Sélection requise", null, "Veuillez sélectionner une aide à supprimer.");
             return;
         }
 
@@ -132,7 +136,7 @@ public class AideController {
             txtReponse.clear();
             cbFiltre.setValue("Toutes");
         } catch (SQLException e) {
-            afficherAlerte("Erreur", "Suppression échouée", e.getMessage());
+            afficherAlerte(Alert.AlertType.ERROR, "Erreur", "Suppression échouée", e.getMessage());
         }
     }
 
@@ -157,21 +161,28 @@ public class AideController {
         }
     }
 
-
-    private void afficherAlerte(String titre, String contenu) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(titre);
-        alert.setHeaderText(null);
-        alert.setContentText(contenu);
-        alert.showAndWait();
-    }
-
-    private void afficherAlerte(String titre, String header, String contenu) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    private void afficherAlerte(Alert.AlertType type, String titre, String header, String contenu) {
+        Alert alert = new Alert(type);
         alert.setTitle(titre);
         alert.setHeaderText(header);
         alert.setContentText(contenu);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void changerVue(ActionEvent event) {
+        try {
+            Hyperlink source = (Hyperlink) event.getSource();
+            String fxmlFile = (String) source.getUserData();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/travelagency/" + fxmlFile));
+            Parent newView = loader.load();
+            AnchorPane rootPane = (AnchorPane) tableAide.getScene().getRoot();
+            rootPane.getChildren().setAll(newView);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            afficherAlerte(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la page", "Une erreur est survenue lors du chargement de la page.");
+        }
     }
 }
 

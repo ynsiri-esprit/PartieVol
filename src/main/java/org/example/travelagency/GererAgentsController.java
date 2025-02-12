@@ -1,19 +1,20 @@
 package org.example.travelagency;
 
-import Entities.Agent;
 import Entities.Utilisateur;
-import Services.Impl.AgentServiceImpl;
 import Services.Impl.UtilisateurServiceImpl;
 import enums.Role;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -68,7 +69,9 @@ public class GererAgentsController implements Initializable {
 
     private void chargerData() {
         // Charger la liste des agents
-        List<Utilisateur> agents = userService.getAllUtilisateurs();
+        List<Utilisateur> agents = userService.getAllUtilisateurs()
+                .stream().filter(user -> user.getRole().equals(Role.AGENT))
+                .toList();
         tableAgents.getItems().setAll(agents);
     }
 
@@ -82,7 +85,7 @@ public class GererAgentsController implements Initializable {
         dateNaissancePicker.setValue(null);
     }
 
-//TODO : recreer la table users et maj l'insertion
+    //TODO : recreer la table users et maj l'insertion
     @FXML
     private void ajouterAgent() {
         String nom = txtNom.getText();
@@ -95,7 +98,7 @@ public class GererAgentsController implements Initializable {
         LocalDate dateNaissance = dateNaissancePicker.getValue();
         if (dateNaissance != null) {
             // Créer un agent
-            Utilisateur newAgent = new Utilisateur(0, nom, prenom,motDePasse, dateNaissance, telephone,email, Role.AGENT);
+            Utilisateur newAgent = new Utilisateur(0, nom, prenom, motDePasse, dateNaissance, telephone, email, Role.AGENT);
 
             // Ajouter l'agent via le service
             userService.ajouterUtilisateur(newAgent);
@@ -185,14 +188,20 @@ public class GererAgentsController implements Initializable {
 
 
     @FXML
-    private void logout() {
-        // Implémentation de la déconnexion
-        // Par exemple, fermer la fenêtre actuelle ou rediriger vers une autre vue
-    }
+    private void changerVue(ActionEvent event) {
+        try {
+            Hyperlink source = (Hyperlink) event.getSource();
+            String fxmlFile = (String) source.getUserData();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/travelagency/" + fxmlFile));
+            Parent newView = loader.load();
 
-    @FXML
-    private void goToFAQ() {
-        // Implémentation de la redirection vers l'interface des FAQ
+            AnchorPane rootPane = (AnchorPane) tableAgents.getScene().getRoot();
+            rootPane.getChildren().setAll(newView);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la page", "Une erreur est survenue lors du chargement de la page.");
+        }
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {

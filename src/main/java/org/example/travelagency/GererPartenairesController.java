@@ -6,9 +6,14 @@ import enums.PartnerCategory;
 import enums.PartnerType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -211,6 +216,21 @@ public class GererPartenairesController {
     }
 
 
-    public void test() {
+    @FXML
+    private void changerVue(ActionEvent event) {
+        try {
+            Hyperlink source = (Hyperlink) event.getSource();
+            String fxmlFile = (String) source.getUserData();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/travelagency/" + fxmlFile));
+            Parent newView = loader.load();
+            AnchorPane rootPane = (AnchorPane) tablePartenaires.getScene().getRoot();
+            rootPane.getChildren().setAll(newView);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            afficherAlerte(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la page", "Une erreur est survenue lors du chargement de la page.");
+        }
     }
+
+
 }
