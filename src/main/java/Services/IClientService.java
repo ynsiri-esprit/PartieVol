@@ -1,5 +1,7 @@
 package Services;
 
-public interface IClientService extends IService<Client> {
+import Entities.Utilisateur;
+
+public interface IClientService extends IService<Utilisateur> {
 
 }
